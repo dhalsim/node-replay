@@ -26,6 +26,13 @@ HTTP.request = function(options, callback) {
   const request = new ProxyRequest(options, Replay.chain.start);
   if (callback)
     request.once('response', callback);
+
+  setTimeout(function () {
+    request.emit('socket', request);
+    request.emit('secureConnect');
+    request.emit('connect');
+  }, 100);
+
   return request;
 };
 
